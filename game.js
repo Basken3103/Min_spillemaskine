@@ -64,7 +64,7 @@ function spin() {
         return probabilities;
     }
 
-    //Sandsynligheds beregner
+    //Sandsynligheden for tre ens
     const probabilities = calculateProbabilities(weightedSymbols);
     console.log("Sandsynligheder pr. hjul:", probabilities);
 
@@ -80,8 +80,29 @@ function spin() {
         return jackpotProbabilities;
     }
 
+
+    //Udvidet sandsynlighed med 2 ens symboler
     const jackpotChances = calculateJackpotProbability(weightedSymbols);
     console.log("Sandsynlighed for 3 ens (Jackpot):", jackpotChances);
+
+    function calculateTwoOfAKindProbability(symbols) {
+        const probabilities = calculateProbabilities(symbols);
+        const twoOfAKindProbabilities = {};
+
+        for (const symbol in probabilities) {
+            // Sandsynlighed for to ens og ét forskelligt
+            const Psymbol = probabilities[symbol] / 100;
+            const PnotSymbol = (100 - probabilities[symbol]) / 100;
+
+            // 3 mulige kombinationer (XXY, XYX, YXX)
+            twoOfAKindProbabilities[symbol] = 3 * Math.pow(Psymbol, 2) * PnotSymbol * 100;
+        }
+
+        return twoOfAKindProbabilities;
+    }
+
+    const twoOfAKindChances = calculateTwoOfAKindProbability(weightedSymbols);
+    console.log("Sandsynlighed for 2 ens symboler:", twoOfAKindChances);
 
 
 
