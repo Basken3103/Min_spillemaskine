@@ -2,6 +2,33 @@
     box-sizing: border-box;
 }
 
+/* Generel styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    /* Moderne skrifttype */
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #2b1055, #7597de);
+    /* Gradient baggrund */
+    color: #fff;
+    /* Hvid tekst */
+    overflow: hidden;
+    /* Undgå scrollbars */
+    height: 100vh;
+}
+
+/* Titel */
+h1 {
+    font-size: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    margin-top: 20px;
+    text-shadow: 0 0 20px rgba(200, 200, 200, 0.8);
+    background-color: black;
+    color: blue;
+}
+
 img {
     width: 100%;
 }
@@ -13,6 +40,9 @@ figure {
 
 .slots {
     display: flex;
+    margin: auto;
+    max-width: 270px;
+    justify-content: space-between;
 }
 
 .slot {
@@ -24,10 +54,56 @@ figure {
     overflow: hidden;
 }
 
+
 .all-icons {
     position: absolute;
     top: 0;
     left: 0;
     transform: translateY(0%);
     transition: transform 2s ease-out;
+}
+
+/* Hjul (reels) */
+.reel {
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    border: 3px solid #fff;
+    border-radius: 10px;
+    background: linear-gradient(to bottom, #444, #222);
+    box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Symbol-animation */
+.icons {
+    transition: transform 1.5s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* Spin-knap */
+button {
+    padding: 20px 50px;
+    font-size: 1.6rem;
+    color: black;
+    background: linear-gradient(135deg, #c641ff, #ff4b2b);
+    /* Rød-orange gradient */
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(255, 99, 71, 0.8);
+}
+
+/* Gevinst- og tab-besked */
+#message {
+    font-size: 1.8rem;
+    margin-top: 20px;
+    font-weight: bold;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
 }

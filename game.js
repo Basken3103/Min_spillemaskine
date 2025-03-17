@@ -3,8 +3,10 @@ let slot1 = document.getElementById("slot1")
 let slot2 = document.getElementById("slot2")
 let slot3 = document.getElementById("slot3")
 let icons1 = document.getElementById("icons1")
+let icons2 = document.getElementById("icons2")
+let icons3 = document.getElementById("icons3")
 
-
+// Symboler og sandsynligheder
 const weightedSymbols = [
     "🍋", "🍋", "🍋", "🍋",     // 40% - Citroner (4 ud af 10)
     "🍒", "🍒", "🍒",          // 30% - Kirsebær (3 ud af 10)
@@ -13,6 +15,21 @@ const weightedSymbols = [
     "7️⃣"                     // 5%  - Syv (1 ud af 20)
 ];
 
+// Gevinsttabel (for 3 ens symboler)
+const payoutTable = {
+    "🍋": 5,   // 3 citroner giver 5 credits
+    "🍒": 10,  // 3 kirsebær giver 10 credits
+    "🔔": 20,  // 3 bar giver 20 credits
+    "⭐": 50,  // 3 stjerner giver 50 credits
+    "7️⃣": 100 // 3 syv-taller giver 100 credits (jackpot)
+};
+
+// Gør funktionen globalt tilgængelig
+
+console.log("Spinning...");
+
+// Spillerens startkredit
+let credits = 100;
 
 //Tilfældigt tal mellem 1-10 
 function generateRandom() {
@@ -21,6 +38,7 @@ function generateRandom() {
     return roundedNumber
 }
 
+//Dreje funktion
 function spin() {
     let results = [
         generateRandom(),
@@ -39,11 +57,6 @@ function spin() {
     icons3.style.transform = "translateY(-" + mellemRegning(results[2]) + "%)"
     console.log(results[0])
 
-    // Potentiel funktion
-
-    //if (results[0] == results[1] && results[0] == results[2]) {
-    //    document.body.innerHTML += "Du har vundet"
-    //}
 
     //Sandsynligheds funktion
     function calculateProbabilities(symbols) {
@@ -105,8 +118,47 @@ function spin() {
     console.log("Sandsynlighed for 2 ens symboler:", twoOfAKindChances);
 
 
+    // Opdater credits i UI
+    function updateCredits(amount) {
+        credits += amount;
+        creditsDisplay.innerText = credits;
+
+        // Deaktiver knappen, hvis credits = 0
+        if (credits <= 0) {
+            spinButton.disabled = true;
+            message.innerText = "❌ Du har ikke flere credits!";
+        }
+    }
+
+    // Tjek om spilleren har credits
+    if (credits <= 0) {
+        message.innerText = "❌ Ingen credits tilbage!";
+        return;
+    }
 
 
+    // Brug 1 credit for at spinne
+    updateCredits(-1);
+    message.innerText = "";
 
 
+    // Tjek gevinst efter animation
+    setTimeout(() => {
+        if (results[0] === results[1] && results[1] === results[2]) {
+            // Spilleren har vundet
+            const winnings = payoutTable[results[100]] || 0;
+            message.innerText = `🎉 Du vandt ${winnings} credits med ${results[100]}!`;
+            updateCredits(winnings);
+        } else {
+            // Ingen gevinst
+            message.innerText = "❌ Du tabte. Prøv igen";
+        }
+    }, 1600);
 }
+
+
+
+
+
+
+
