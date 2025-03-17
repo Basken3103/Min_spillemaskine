@@ -2,6 +2,11 @@
     box-sizing: border-box;
 }
 
+div {
+    width: 2000px;
+    padding: 30px;
+}
+
 /* Generel styling */
 body {
     font-family: 'Poppins', sans-serif;
@@ -23,7 +28,7 @@ h1 {
     font-size: 3rem;
     text-transform: uppercase;
     letter-spacing: 5px;
-    margin-top: 20px;
+    margin-top: 0px;
     text-shadow: 0 0 20px rgba(200, 200, 200, 0.8);
     background-color: black;
     color: blue;
@@ -52,6 +57,7 @@ figure {
     border: 3px solid black;
     position: relative;
     overflow: hidden;
+    margin-bottom: 50px;
 }
 
 
@@ -93,6 +99,7 @@ button {
     border-radius: 50px;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: inline-block;
 }
 
 button:hover {
@@ -106,4 +113,39 @@ button:hover {
     margin-top: 20px;
     font-weight: bold;
     text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+    color: gold;
+}
+
+/* Credits-container */
+#creditsDisplay {
+    font-size: 2rem;
+    /* Større tekst */
+    margin-top: 20px;
+    font-weight: bold;
+    color: white;
+    letter-spacing: 1.5px;
+    display: inline-block;
+    /* For at style indholdet bedre */
+    padding: 10px 20px;
+    /* Indvendig polstring */
+    border: 3px solid #ffd700;
+    /* Guld ramme */
+    border-radius: 15px;
+    /* Bløde hjørner */
+    background: linear-gradient(145deg, #222, #444);
+    /* Mørk metallisk baggrund */
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.5);
+    /* Blød guld-glød */
+}
+
+/* Selve credits-tallet */
+#credits {
+    color: white;
+    /* Guld farve */
+    font-size: 2.5rem;
+    /* Større tal */
+    text-shadow: 0 0 20px rgba(255, 223, 0, 0.9);
+    /* Lysende effekt */
+    animation: pulse 2s infinite;
+    /* Pulserende animation */
 }
