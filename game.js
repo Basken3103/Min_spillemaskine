@@ -6,36 +6,28 @@ let icons1 = document.getElementById("icons1")
 let icons2 = document.getElementById("icons2")
 let icons3 = document.getElementById("icons3")
 
-// Symboler og sandsynligheder
-const weightedSymbols = [
-    "🍋", "🍋", "🍋", "🍋",     // 40% - Citroner (4 ud af 10)
-    "🍒", "🍒", "🍒",          // 30% - Kirsebær (3 ud af 10)
-    "🔔", "🔔",               // 15% - Bar (2 ud af 10)
-    "⭐", "⭐",                // 10% - Stjerne (2 ud af 10)
-    "7️⃣"                     // 5%  - Syv (1 ud af 20)
-];
+//Highscore elementer
+let form = document.getElementById("score")
+let view = document.getElementById("highscore")
 
-// Gevinsttabel (for 3 ens symboler)
-const payoutTable = {
-    "🍋": 5,   // 3 citroner giver 5 credits
-    "🍒": 10,  // 3 kirsebær giver 10 credits
-    "🔔": 20,  // 3 bar giver 20 credits
-    "⭐": 50,  // 3 stjerner giver 50 credits
-    "7️⃣": 100 // 3 syv-taller giver 100 credits (jackpot)
-};
+//addEventListener
+// form.addEventListener("submit", function (event) {
+//     event.preventDefault()
+//     localStorage.setItem("petType", form.elements.pet.value)
+//     localStorage.setItem("petName", form.elements.petName.value)
+//     updateView()
+// })
 
-// Gør funktionen globalt tilgængelig
-
-console.log("Spinning...");
-
-// Spillerens startkredit
-let credits = 100;
-
-//Tilfældigt tal mellem 1-10 
-function generateRandom() {
-    let randomNumber = Math.random()
-    let roundedNumber = Math.floor((randomNumber * 10) + 1)
-    return roundedNumber
+//Update function
+function updateView() {
+    if (localStorage.getItem("petType") && localStorage.getItem("petName")) {
+        view.innerHTML = "<p>"
+        view.innerHTML += "Dit kæledyr er en "
+        view.innerHTML += localStorage.getItem("petType")
+        view.innerHTML += " som hedder "
+        view.innerHTML += localStorage.getItem("petName")
+        view.innerHTML += "</p>"
+    }
 }
 
 //Dreje funktion
@@ -155,6 +147,44 @@ function spin() {
         }
     }, 1600);
 }
+
+
+
+
+//Symboler og sandsynligheder
+const weightedSymbols = [
+    "🍋", "🍋", "🍋", "🍋",     // 40% - Citroner (4 ud af 10)
+    "🍒", "🍒", "🍒",          // 30% - Kirsebær (3 ud af 10)
+    "🔔", "🔔",               // 15% - Bar (2 ud af 10)
+    "⭐", "⭐",                // 10% - Stjerne (2 ud af 10)
+    "7️⃣"                     // 5%  - Syv (1 ud af 20)
+];
+
+
+// Gevinsttabel (for 3 ens symboler)
+const payoutTable = {
+    "🍋": 5,   // 3 citroner giver 5 credits
+    "🍒": 10,  // 3 kirsebær giver 10 credits
+    "🔔": 20,  // 3 bar giver 20 credits
+    "⭐": 50,  // 3 stjerner giver 50 credits
+    "7️⃣": 100 // 3 syv-taller giver 100 credits (jackpot)
+};
+
+// Gør funktionen globalt tilgængelig
+
+console.log("Spinning...");
+
+// Spillerens startkredit
+let credits = 100;
+
+//Tilfældigt tal mellem 1-10 
+function generateRandom() {
+    let randomNumber = Math.random()
+    let roundedNumber = Math.floor((randomNumber * 10) + 1)
+    return roundedNumber
+}
+
+
 
 
 
