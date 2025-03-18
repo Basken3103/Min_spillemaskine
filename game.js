@@ -10,25 +10,64 @@ let icons3 = document.getElementById("icons3")
 let form = document.getElementById("score")
 let view = document.getElementById("highscore")
 
-//addEventListener
-// form.addEventListener("submit", function (event) {
-//     event.preventDefault()
-//     localStorage.setItem("petType", form.elements.pet.value)
-//     localStorage.setItem("petName", form.elements.petName.value)
-//     updateView()
-// })
+addEventListener
+form.addEventListener("submit", function (event) {
+    event.preventDefault()
+    localStorage.setItem("Name", form.elements.name.value)
+    localStorage.setItem("Number", form.elements.Number.value)
+    updateView()
+})
 
 //Update function
 function updateView() {
-    if (localStorage.getItem("petType") && localStorage.getItem("petName")) {
+    if (localStorage.getItem("Number") && localStorage.getItem("Name")) {
         view.innerHTML = "<p>"
-        view.innerHTML += "Dit kæledyr er en "
-        view.innerHTML += localStorage.getItem("petType")
-        view.innerHTML += " som hedder "
-        view.innerHTML += localStorage.getItem("petName")
+        view.innerHTML += "Din score er "
+        view.innerHTML += localStorage.getItem("Number")
+        view.innerHTML += " Din highscore er "
+        view.innerHTML += localStorage.getItem("Number")
         view.innerHTML += "</p>"
     }
 }
+
+//Sandsynligheden for tre ens
+const probabilities = calculateProbabilities(weightedSymbols);
+console.log("Sandsynligheder pr. hjul:", probabilities);
+
+function calculateJackpotProbability(symbols) {
+    const probabilities = calculateProbabilities(symbols);
+    const jackpotProbabilities = {};
+
+    for (const symbol in probabilities) {
+        // Sandsynlighed for 3 ens (gange samme sandsynlighed 3 gange)
+        jackpotProbabilities[symbol] = Math.pow(probabilities[symbol] / 100, 3) * 100;
+    }
+
+    return jackpotProbabilities;
+}
+
+//Udvidet sandsynlighed med 2 ens symboler
+const jackpotChances = calculateJackpotProbability(weightedSymbols);
+console.log("Sandsynlighed for 3 ens (Jackpot):", jackpotChances);
+
+function calculateTwoOfAKindProbability(symbols) {
+    const probabilities = calculateProbabilities(symbols);
+    const twoOfAKindProbabilities = {};
+
+    for (const symbol in probabilities) {
+        // Sandsynlighed for to ens og ét forskelligt
+        const Psymbol = probabilities[symbol] / 100;
+        const PnotSymbol = (100 - probabilities[symbol]) / 100;
+
+        // 3 mulige kombinationer (XXY, XYX, YXX)
+        twoOfAKindProbabilities[symbol] = 3 * Math.pow(Psymbol, 2) * PnotSymbol * 100;
+    }
+
+    return twoOfAKindProbabilities;
+}
+
+const twoOfAKindChances = calculateTwoOfAKindProbability(weightedSymbols);
+console.log("Sandsynlighed for 2 ens symboler:", twoOfAKindChances);
 
 //Dreje funktion
 function spin() {
@@ -67,43 +106,6 @@ function spin() {
         }
 
         return probabilities;
-    }
-
-    //Sandsynligheden for tre ens
-    const probabilities = calculateProbabilities(weightedSymbols);
-    console.log("Sandsynligheder pr. hjul:", probabilities);
-
-    function calculateJackpotProbability(symbols) {
-        const probabilities = calculateProbabilities(symbols);
-        const jackpotProbabilities = {};
-
-        for (const symbol in probabilities) {
-            // Sandsynlighed for 3 ens (gange samme sandsynlighed 3 gange)
-            jackpotProbabilities[symbol] = Math.pow(probabilities[symbol] / 100, 3) * 100;
-        }
-
-        return jackpotProbabilities;
-    }
-
-
-    //Udvidet sandsynlighed med 2 ens symboler
-    const jackpotChances = calculateJackpotProbability(weightedSymbols);
-    console.log("Sandsynlighed for 3 ens (Jackpot):", jackpotChances);
-
-    function calculateTwoOfAKindProbability(symbols) {
-        const probabilities = calculateProbabilities(symbols);
-        const twoOfAKindProbabilities = {};
-
-        for (const symbol in probabilities) {
-            // Sandsynlighed for to ens og ét forskelligt
-            const Psymbol = probabilities[symbol] / 100;
-            const PnotSymbol = (100 - probabilities[symbol]) / 100;
-
-            // 3 mulige kombinationer (XXY, XYX, YXX)
-            twoOfAKindProbabilities[symbol] = 3 * Math.pow(Psymbol, 2) * PnotSymbol * 100;
-        }
-
-        return twoOfAKindProbabilities;
     }
 
     const twoOfAKindChances = calculateTwoOfAKindProbability(weightedSymbols);
