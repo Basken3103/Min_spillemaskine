@@ -1,3 +1,17 @@
+let highScores = [
+
+]
+
+
+
+if (localStorage.getItem("highScore")) {
+    highScores = JSON.parse(localStorage.getItem("highScore"))
+}
+
+highScores.forEach(function (element, index) {
+    document.body.innerHTML += element
+})
+
 //DOM elementer
 let slot1 = document.getElementById("slot1")
 let slot2 = document.getElementById("slot2")
@@ -28,8 +42,8 @@ var weightedSymbols = [
 addEventListener
 form.addEventListener("submit", function (event) {
     event.preventDefault()
-    localStorage.setItem("Name", form.elements.PlayerName.value)
-    localStorage.setItem("Score", form.elements.highScore.value)
+    highScores.push("<p>" + form.elements.playerName.value + ": " + form.elements.highScore.value + "</p>")
+    localStorage.setItem("highScore", JSON.stringify(highScores))
     updateView()
 })
 
@@ -121,7 +135,7 @@ function spin() {
 
     }
 
-    icons1.style.transform = "translateY(-" + mellemRegning(results[0]) + "%)"
+    icons1.style.transform = "translateY(-" + mellemRegning(results[0]) + "icons1)"
     icons2.style.transform = "translateY(-" + mellemRegning(results[1]) + "%)"
     icons3.style.transform = "translateY(-" + mellemRegning(results[2]) + "%)"
     console.log(results[0])
@@ -168,10 +182,6 @@ function spin() {
     }, 1600);
 
 }
-
-
-
-
 
 
 // Gevinsttabel (for 3 ens symboler)
