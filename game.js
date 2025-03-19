@@ -10,11 +10,26 @@ let icons3 = document.getElementById("icons3")
 let form = document.getElementById("score")
 let view = document.getElementById("highscore")
 
+
+// Spillerens startkredit
+let credits = 100;
+
+
+
+//Symboler og sandsynligheder
+var weightedSymbols = [
+    "🍋", "🍋", "🍋", "🍋",     // 40% - Citroner (4 ud af 10)
+    "🍒", "🍒", "🍒",          // 30% - Kirsebær (3 ud af 10)
+    "🔔", "🔔",               // 15% - Bar (2 ud af 10)
+    "⭐", "⭐",                // 10% - Stjerne (2 ud af 10)
+    "7️⃣"                     // 5%  - Syv (1 ud af 20)
+];
+
 addEventListener
 form.addEventListener("submit", function (event) {
     event.preventDefault()
-    localStorage.setItem("Name", form.elements.name.value)
-    localStorage.setItem("Number", form.elements.Number.value)
+    localStorage.setItem("Name", form.elements.PlayerName.value)
+    localStorage.setItem("Score", form.elements.highScore.value)
     updateView()
 })
 
@@ -51,7 +66,9 @@ const jackpotChances = calculateJackpotProbability(weightedSymbols);
 console.log("Sandsynlighed for 3 ens (Jackpot):", jackpotChances);
 
 function calculateTwoOfAKindProbability(symbols) {
+
     const probabilities = calculateProbabilities(symbols);
+
     const twoOfAKindProbabilities = {};
 
     for (const symbol in probabilities) {
@@ -68,6 +85,27 @@ function calculateTwoOfAKindProbability(symbols) {
 
 const twoOfAKindChances = calculateTwoOfAKindProbability(weightedSymbols);
 console.log("Sandsynlighed for 2 ens symboler:", twoOfAKindChances);
+
+
+//Sandsynligheds funktion
+function calculateProbabilities(symbols) {
+    console.log(symbols)
+    const totalSymbols = symbols.length;
+    const counts = {};
+
+    // Tæl hvor mange gange hvert symbol optræder
+    symbols.forEach(symbol => {
+        counts[symbol] = (counts[symbol] || 0) + 1;
+    });
+
+    // Beregn sandsynligheden for hvert symbol
+    const probabilities = {};
+    for (const symbol in counts) {
+        probabilities[symbol] = (counts[symbol] / totalSymbols) * 100;
+    }
+
+    return probabilities;
+}
 
 //Dreje funktion
 function spin() {
@@ -89,27 +127,6 @@ function spin() {
     console.log(results[0])
 
 
-    //Sandsynligheds funktion
-    function calculateProbabilities(symbols) {
-        const totalSymbols = symbols.length;
-        const counts = {};
-
-        // Tæl hvor mange gange hvert symbol optræder
-        symbols.forEach(symbol => {
-            counts[symbol] = (counts[symbol] || 0) + 1;
-        });
-
-        // Beregn sandsynligheden for hvert symbol
-        const probabilities = {};
-        for (const symbol in counts) {
-            probabilities[symbol] = (counts[symbol] / totalSymbols) * 100;
-        }
-
-        return probabilities;
-    }
-
-    const twoOfAKindChances = calculateTwoOfAKindProbability(weightedSymbols);
-    console.log("Sandsynlighed for 2 ens symboler:", twoOfAKindChances);
 
 
     // Opdater credits i UI
@@ -147,20 +164,14 @@ function spin() {
             // Ingen gevinst
             message.innerText = "❌ Du tabte. Prøv igen";
         }
+        form.elements.highScore.value = credits
     }, 1600);
+
 }
 
 
 
 
-//Symboler og sandsynligheder
-const weightedSymbols = [
-    "🍋", "🍋", "🍋", "🍋",     // 40% - Citroner (4 ud af 10)
-    "🍒", "🍒", "🍒",          // 30% - Kirsebær (3 ud af 10)
-    "🔔", "🔔",               // 15% - Bar (2 ud af 10)
-    "⭐", "⭐",                // 10% - Stjerne (2 ud af 10)
-    "7️⃣"                     // 5%  - Syv (1 ud af 20)
-];
 
 
 // Gevinsttabel (for 3 ens symboler)
@@ -176,8 +187,7 @@ const payoutTable = {
 
 console.log("Spinning...");
 
-// Spillerens startkredit
-let credits = 100;
+
 
 //Tilfældigt tal mellem 1-10 
 function generateRandom() {
