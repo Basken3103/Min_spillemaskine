@@ -2,15 +2,18 @@ let highScores = [
 
 ]
 
+let score = 0;
+let highScore = localStorage.getItem("highScore") || 0;
+
 
 
 if (localStorage.getItem("highScore")) {
     highScores = JSON.parse(localStorage.getItem("highScore"))
 }
 
-highScores.forEach(function (element, index) {
-    document.body.innerHTML += element
-})
+//highScores.forEach(function (element, index) {
+//    document.body.innerHTML += element
+//})
 
 //DOM elementer
 let slot1 = document.getElementById("slot1")
@@ -25,8 +28,15 @@ let form = document.getElementById("score")
 let view = document.getElementById("highscore")
 
 
-// Spillerens startkredit
+// Spillerens startpoint og score
 let credits = 100;
+
+//Intialisere score ved load
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("score").textContent = score;
+    document.getElementById("highScore").textContent = highScore;
+});
+
 
 
 
@@ -38,6 +48,7 @@ var weightedSymbols = [
     "⭐", "⭐",                // 10% - Stjerne (2 ud af 10)
     "7️⃣"                     // 5%  - Syv (1 ud af 20)
 ];
+
 
 addEventListener
 form.addEventListener("submit", function (event) {
@@ -169,16 +180,23 @@ function spin() {
 
     // Tjek gevinst efter animation
     setTimeout(() => {
-        if (results[0] === results[1] && results[1] === results[2]) {
-            // Spilleren har vundet
-            const winnings = payoutTable[results[100]] || 0;
-            message.innerText = `🎉 Du vandt ${winnings} credits med ${results[100]}!`;
+        const [s1, s2, s3] = results;
+
+        if (s1 === s2 && s2 === s3) {
+            const winnings = payoutTable[s1] || 0;
+            const pointWin = symbolPoints[s1] || 0;
+
+            message.innerText = `🎉 Du vandt ${winnings} credits og ${pointWin} point med ${s1}!`;
             updateCredits(winnings);
+            updateScore(pointWin);
+        } else if (s1 === s2 || s2 === s3 || s1 === s3) {
+            // 2 symboler matcher
+            const pointWin = 5;
+            message.innerText = `🔸 Du matchede 2 symboler og fik ${pointWin} point!`;
+            updateScore(pointWin);
         } else {
-            // Ingen gevinst
-            message.innerText = "❌ Du tabte. Prøv igen";
+            message.innerText = "❌ Du tabte. Prøv igen.";
         }
-        form.elements.highScore.value = credits
     }, 1600);
 
 }
@@ -206,8 +224,18 @@ function generateRandom() {
     return roundedNumber
 }
 
+//Score funktion
+function updateScore(amount) {
+    score += amount;
+    document.getElementById("score").textContent = score;
 
+    if (score > highScore) {
+        highScore = score;
+        localStorage.setItem("highScore", highScore);
+        document.getElementById("highScore").textContent = highScore;
+    }
 
+}
 
 
 
