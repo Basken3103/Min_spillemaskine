@@ -22,6 +22,8 @@ let slot3 = document.getElementById("slot3")
 let icons1 = document.getElementById("icons1")
 let icons2 = document.getElementById("icons2")
 let icons3 = document.getElementById("icons3")
+let audio = document.getElementById("audio")
+
 
 //Highscore elementer
 let form = document.getElementById("score")
@@ -146,7 +148,7 @@ function spin() {
 
     }
 
-    icons1.style.transform = "translateY(-" + mellemRegning(results[0]) + "icons1)"
+    icons1.style.transform = "translateY(-" + mellemRegning(results[0]) + "%)"
     icons2.style.transform = "translateY(-" + mellemRegning(results[1]) + "%)"
     icons3.style.transform = "translateY(-" + mellemRegning(results[2]) + "%)"
     console.log(results[0])
@@ -187,8 +189,10 @@ function spin() {
             const pointWin = symbolPoints[s1] || 0;
 
             message.innerText = `🎉 Du vandt ${winnings} credits og ${pointWin} point med ${s1}!`;
+            audio.play()
             updateCredits(winnings);
             updateScore(pointWin);
+
         } else if (s1 === s2 || s2 === s3 || s1 === s3) {
             // 2 symboler matcher
             const pointWin = 5;
@@ -236,6 +240,8 @@ function updateScore(amount) {
     }
 
 }
+
+
 
 
 
