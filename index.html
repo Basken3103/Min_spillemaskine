@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spillemaskine</title>
+    <title>Slot machine</title>
     <script>
             if ("serviceWorker" in navigator){
 
@@ -70,27 +70,21 @@
         </div>
     </div>
 
-    <button id="spinButton" onclick="spin()">SPIN (1 Point)</button>
+    <button id="spinButton" button type="button" onclick="spin()">SPIN (1 Point)</button>
     <p id="message"></p>
     <p id="creditsDisplay">Points: <span id="credits">100</span></p>
     <p>Score: <span id="score">0</span></p>
     <p>Highscore: <span id="highScore">0</span></p>
 
 
+
     <form id="score">
         <label>
             Player Name:
-            <input type="text" name="playerName" required>
+            <input type="text" name="playerName" required placeholder="">
         </label>
-        <label>
-            Din score:
-            <input type="text" name="highScore" disabled>
-        </label>
-        <button type="submit">Gem score</button>
-
-
-    </form>
-
+       
+        <button type="submit" class="submit">Save Score</button>
 </body>
 
 </html>

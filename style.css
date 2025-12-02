@@ -100,6 +100,11 @@ button {
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: inline-block;
+    margin-left: 10px;
+}
+
+button.submit {
+    margin-top: 20px;
 }
 
 button:hover {
@@ -149,3 +154,4 @@ button:hover {
     animation: pulse 2s infinite;
     /* Pulserende animation */
 }
+

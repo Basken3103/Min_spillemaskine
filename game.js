@@ -188,7 +188,7 @@ function spin() {
             const winnings = payoutTable[s1] || 0;
             const pointWin = symbolPoints[s1] || 0;
 
-            message.innerText = `🎉 Du vandt ${winnings} credits og ${pointWin} point med ${s1}!`;
+            message.innerText = `🎉 You won ${winnings} credits and ${pointWin} points with ${s1}!`;
             audio.play()
             updateCredits(winnings);
             updateScore(pointWin);
@@ -196,10 +196,10 @@ function spin() {
         } else if (s1 === s2 || s2 === s3 || s1 === s3) {
             // 2 symboler matcher
             const pointWin = 5;
-            message.innerText = `🔸 Du matchede 2 symboler og fik ${pointWin} point!`;
+            message.innerText = `🔸 You matched 2 symboler and got ${pointWin} points!`;
             updateScore(pointWin);
         } else {
-            message.innerText = "❌ Du tabte. Prøv igen.";
+            message.innerText = "❌ You lost, try again.";
         }
     }, 1600);
 
