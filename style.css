@@ -90,7 +90,7 @@ figure {
 
 /* Spin-knap */
 button {
-    padding: 20px 50px;
+    padding: 15px 50px;
     font-size: 1.6rem;
     color: black;
     background: linear-gradient(135deg, #c641ff, #ff4b2b);
@@ -100,11 +100,10 @@ button {
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: inline-block;
-    margin-left: 10px;
 }
 
 button.submit {
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 button:hover {
